@@ -5,11 +5,13 @@ This project implements a real-time data pipeline to ingest, validate, transform
 
 ## Folder Structure
 - `data/` - Folder to place incoming raw CSV files.
-- `logs/` - Logs generated during pipeline execution.
+- `processed/` - Processed files are moved here.
 - `quarantine/` - Invalid data files moved here for review.
+- `configs/` - Define customizable parameters for how the pipeline should behave without hardcoding them in your Python code.
 - `src/` - Python source code for the pipeline.
 - `requirements.txt` - Python dependencies.
 - `.env` - Environment variables for configuration.
+- `sql/` - - SQL scripts for creating tables.
 
 ## Setup Instructions
 
