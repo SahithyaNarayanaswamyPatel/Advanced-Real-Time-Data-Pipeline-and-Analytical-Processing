@@ -40,9 +40,6 @@ Note:
 -AirQualityUCI.csv: Original dataset with no changes.
 -AirQualityUCI_cleaned.csv: Cleaned dataset with no null values used to run the pipeline end-to-end with no errors.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Database Schema
 
@@ -105,7 +102,12 @@ Stores summary statistics computed over raw sensor data, facilitating efficient 
 - `idx_agg_sensor_metric` on `(sensor_name, metric_type)` to speed up filtering by sensor and metric.
 - `idx_agg_timestamp` on `aggregation_timestamp` for efficient time-range queries.
 
----
+
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 
 
 
