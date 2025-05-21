@@ -1,0 +1,101 @@
+data_source: air_quality_sensor
+
+delimiter: ";"
+decimal: ","
+encoding: utf-8
+datetime_format: "%d/%m/%Y %H.%M.%S"
+datetime_column: "DateTime"
+
+fields:
+  Date:
+    type: string
+  Time:
+    type: string
+  CO(GT):
+    type: float
+    min: 0
+  PT08.S1(CO):
+    type: float
+    min: 0
+  NMHC(GT):
+    type: float
+    min: 0
+  C6H6(GT):
+    type: float
+    min: 0
+  PT08.S2(NMHC):
+    type: float
+    min: 0
+  NOx(GT):
+    type: float
+    min: 0
+  PT08.S3(NOx):
+    type: float
+    min: 0
+  NO2(GT):
+    type: float
+    min: 0
+  PT08.S4(NO2):
+    type: float
+    min: 0
+  PT08.S5(O3):
+    type: float
+    min: 0
+  T:
+    type: float
+    min: -50
+    max: 50
+  RH:
+    type: float
+    min: 0
+    max: 100
+  AH:
+    type: float
+    min: 0
+
+sensor_columns:
+  - CO(GT)
+  - PT08.S1(CO)
+  - NMHC(GT)
+  - C6H6(GT)
+  - PT08.S2(NMHC)
+  - NOx(GT)
+  - PT08.S3(NOx)
+  - NO2(GT)
+  - PT08.S4(NO2)
+  - PT08.S5(O3)
+  - T
+  - RH
+  - AH
+
+aggregation:
+  group_by: ["DateTime"]
+
+transformations:
+  CO(GT):
+    normalize: true
+  PT08.S1(CO):
+    normalize: true
+  NMHC(GT):
+    normalize: true
+  C6H6(GT):
+    normalize: true
+  PT08.S2(NMHC):
+    normalize: true
+  NOx(GT):
+    normalize: true
+  PT08.S3(NOx):
+    normalize: true
+  NO2(GT):
+    normalize: true
+  PT08.S4(NO2):
+    normalize: true
+  PT08.S5(O3):
+    normalize: true
+  T:
+    normalize: true
+  RH:
+    normalize: true
+  AH:
+    normalize: true
+
