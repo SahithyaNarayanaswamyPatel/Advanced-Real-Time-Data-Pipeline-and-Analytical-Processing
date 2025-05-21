@@ -44,3 +44,68 @@ Note:
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
+## Database Schema
+
+This project uses PostgreSQL to store both raw sensor readings and aggregated metrics from the Air Quality UCI dataset.
+
+### Tables
+
+#### `raw_data`
+
+Stores the original sensor data imported from CSV files. Each row corresponds to one timestamped sensor reading.
+
+| Column Name      | Type              | Description                                                                 |
+|------------------|-------------------|-----------------------------------------------------------------------------|
+| `id`             | SERIAL PRIMARY KEY| Unique identifier for each record                                            |
+| `file_name`      | TEXT              | Name of the CSV file source                                                  |
+| `data_source`    | TEXT              | Source identifier, defaults to `'air_quality_sensor'`                        |
+| `sensor_id`      | TEXT              | Optional sensor identifier, nullable                                         |
+| `timestamp`      | TIMESTAMPTZ       | Timestamp of the reading (parsed from the original DateTime column)          |
+| Sensor readings  | REAL              | Various air quality sensor values, each with a non-negative constraint       |
+| `"CO(GT)"`       | REAL CHECK (`>=0`)| Carbon Monoxide concentration                                                |
+| `"PT08.S1(CO)"`  | REAL CHECK (`>=0`)| Tin oxide sensor response for CO                                             |
+| `"NMHC(GT)"`     | REAL CHECK (`>=0`)| Non-methane hydrocarbons                                                     |
+| `"C6H6(GT)"`     | REAL CHECK (`>=0`)| Benzene concentration                                                        |
+| `"PT08.S2(NMHC)"`| REAL CHECK (`>=0`)| Tin oxide sensor response for NMHC                                           |
+| `"NOx(GT)"`      | REAL CHECK (`>=0`)| Nitrogen oxides concentration                                                |
+| `"PT08.S3(NOx)"` | REAL CHECK (`>=0`)| Tin oxide sensor response for NOx                                            |
+| `"NO2(GT)"`      | REAL CHECK (`>=0`)| Nitrogen dioxide concentration                                               |
+| `"PT08.S4(NO2)"` | REAL CHECK (`>=0`)| Tin oxide sensor response for NO2                                            |
+| `"PT08.S5(O3)"`  | REAL CHECK (`>=0`)| Tin oxide sensor response for Ozone                                          |
+| `"T"`            | REAL              | Temperature (°C)                                                             |
+| `"RH"`           | REAL              | Relative Humidity (%)                                                        |
+| `"AH"`           | REAL              | Absolute Humidity                                                            |
+| `location`       | TEXT              | Optional location metadata                                                   |
+| `created_at`     | TIMESTAMPTZ       | Timestamp when the record was inserted, defaults to current time             |
+
+##### Indexes for `raw_data`
+
+- `idx_raw_data_timestamp` on `timestamp` to speed up time-based queries.
+- `idx_raw_data_sensor_id` on `sensor_id` to speed up sensor-specific queries.
+
+---
+
+#### `aggregated_data`
+
+Stores summary statistics computed over raw sensor data, facilitating efficient analysis and visualization.
+
+| Column Name             | Type               | Description                                                           |
+|-------------------------|--------------------|-----------------------------------------------------------------------|
+| `id`                    | SERIAL PRIMARY KEY | Unique identifier for each aggregated record                         |
+| `data_source`           | VARCHAR(255)       | Data source identifier (e.g., `'air_quality'`)                       |
+| `file_name`             | VARCHAR(255)       | Source file name for traceability                                    |
+| `sensor_name`           | VARCHAR(255)       | Name of the sensor/metric aggregated (e.g., `'CO(GT)'`)              |
+| `metric_type`           | VARCHAR(50)        | Type of metric (e.g., `'min'`, `'max'`, `'avg'`, `'stddev'`)         |
+| `metric_value`          | DOUBLE PRECISION   | Computed value of the aggregated metric                              |
+| `aggregation_timestamp` | TIMESTAMP          | Timestamp when the aggregation was performed (could match file time) |
+| `created_at`            | TIMESTAMP          | Timestamp when this record was inserted, defaults to current time    |
+
+##### Indexes for `aggregated_data`
+
+- `idx_agg_sensor_metric` on `(sensor_name, metric_type)` to speed up filtering by sensor and metric.
+- `idx_agg_timestamp` on `aggregation_timestamp` for efficient time-range queries.
+
+---
+
+
+
