@@ -37,8 +37,8 @@ Air Quality dataset from UCI which contains the responses of a gas multisensor d
 Link: https://archive.ics.uci.edu/dataset/360/air+quality
 
 Note: 
-AirQualityUCI.csv: Original dataset with no changes
-AirQualityUCI_cleaned.csv: Cleaned dataset with no null values used to run the pipeline end-to-end with no errors.
+-AirQualityUCI.csv: Original dataset with no changes.
+-AirQualityUCI_cleaned.csv: Cleaned dataset with no null values used to run the pipeline end-to-end with no errors.
 
 ## License
 
