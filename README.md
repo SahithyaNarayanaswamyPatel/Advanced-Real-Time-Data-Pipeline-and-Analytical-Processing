@@ -1,7 +1,7 @@
 # Bosch Data Pipeline
 
 ## Project Overview
-This project implements a real-time data pipeline to ingest, validate, transform, and analyze IoT sensor data. It processes CSV files dropped into a monitored folder and stores the raw and aggregated data into a PostgreSQL database.
+This project implements a real-time data pipeline to ingest, validate, transform, and analyze Air Quality sensor data. It processes CSV files dropped into a monitored folder and stores the raw and aggregated data into a PostgreSQL database.
 
 ## Folder Structure
 - `data/` - Folder to place incoming raw CSV files.
