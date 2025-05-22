@@ -14,9 +14,9 @@ def get_connection(config):
         db_cfg = config.get('db', {})
         return psycopg2.connect(
             host=db_cfg.get("host", "localhost"),
-            database=db_cfg.get("database", "bosch"),
-            user=db_cfg.get("user", "sahithyapatel"),
-            password=db_cfg.get("password", "sahithya98")
+            database=db_cfg.get("database", "dbname"),
+            user=db_cfg.get("user", "username"),
+            password=db_cfg.get("password", "password")
         )
     except Exception as e:
         logging.error(f"Database connection failed: {e}")
